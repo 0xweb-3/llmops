@@ -175,3 +175,5 @@ cython_debug/
 
 # venv package
 myenv
+
+.idea
