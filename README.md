@@ -81,3 +81,7 @@
 ├---requirements.txt // 第三方包依赖管理
 └---README.md // 项目说明文件
 ```
+
+## 代码运行流程
+
+![02.jpg](images/02.jpg)
