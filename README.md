@@ -85,3 +85,9 @@
 ## 代码运行流程
 
 ![02.jpg](images/02.jpg)
+
+## 国内代理openai的API
+
+[API](https://yibuapi.com/)
+[文档](https://apifox.com/apidoc/shared/b8f83e55-caca-4bf9-b4ff-493218bfe3fb/6191638m0)
+

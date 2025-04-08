@@ -1,0 +1,12 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=PyCharm
+
+### POST request to local server
+POST http://127.0.0.1:8080/chat
+Content-Type: application/json
+Accept: application/json
+
+{
+  "query": "你是谁"
+}
