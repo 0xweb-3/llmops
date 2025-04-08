@@ -8,5 +8,5 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "query": "你是谁"
+  "query": ""
 }

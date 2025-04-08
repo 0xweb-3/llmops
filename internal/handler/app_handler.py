@@ -4,6 +4,7 @@ from flask import request
 from openai import OpenAI
 
 from internal.schema.app_schema import CompletionRequest
+from pkg.response.response import success_json, validate_error_json
 
 
 class AppHandler:
@@ -16,7 +17,7 @@ class AppHandler:
         """聊天接口"""
         req = CompletionRequest()
         if not req.validate():
-            return {"data": req.errors}
+            return validate_error_json(req.errors)
 
         # 1.提取从接口中获取的输入
         query = request.json.get("query")
@@ -34,4 +35,5 @@ class AppHandler:
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": query}]
         )
-        return response.choices[0].message.content
+
+        return success_json(response.choices[0].message.content)
