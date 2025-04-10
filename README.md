@@ -91,3 +91,27 @@
 [API](https://yibuapi.com/)
 [文档](https://apifox.com/apidoc/shared/b8f83e55-caca-4bf9-b4ff-493218bfe3fb/6191638m0)
 
+## pytest用法
+
+```shell
+# 直接运行文件夹内符合规则的所有用例
+ pytest folder_name
+ 
+#执行某个 Python 文件中的用例
+ pytest test_file.py
+ 
+# 执行某个 Python 文件内的某个函数
+ pytest test_file.py::test_func
+ 
+# 执行某个 Python 文件内某个测试类的某个方法
+ pytest test_file.py::TestClass::test_method
+ 
+# 运行测试时显示标准输出(stdout),允许测试中的 print0) 语句直接输出到终端
+ pytest -s
+ 
+#运行测试时显示标准输出(stdout),允许测试中的 print() 语句直接输出到終端
+ pytest -s
+ 
+#运行测试时显示详细的信息,包括每个测试用例的名称及结果(通过/失败/跳过等), -v 代表 verbose
+ pytest -v
+```

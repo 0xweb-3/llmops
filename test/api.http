@@ -1,5 +1,5 @@
 ### GET request to example server
-GET http://127.0.0.1:8080/ping111
+GET http://127.0.0.1:8080/ping
     ?generated-in=PyCharm
 
 ### POST request to local server
