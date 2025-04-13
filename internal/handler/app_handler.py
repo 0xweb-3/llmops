@@ -1,14 +1,40 @@
 import os
+import uuid
+from dataclasses import dataclass
 
 from flask import request
+from injector import inject
 from openai import OpenAI
 
 from internal.schema.app_schema import CompletionRequest
-from pkg.response.response import success_json, validate_error_json
+from internal.service import AppService
+from pkg.response.response import success_json, validate_error_json, success_message
 
 
+@inject
+@dataclass
 class AppHandler:
     """应用控制器"""
+    app_service: AppService
+
+    def create_app(self):
+        """调用服务创建新的App记录"""
+        app = self.app_service.create_app()
+        return success_message(f"创建成功APP，APP的Id为{app.id}")
+
+    def get_app(self, id: uuid.UUID):
+        """获取APP信息"""
+        app = self.app_service.get_app(id)
+        return success_message(f"获取APP成功，APP的名称为{app.name}")
+
+    def update_app(self, id: uuid.UUID):
+        """修改App信息"""
+        app = self.app_service.update_app(id)
+        return success_message(f"修改APP成功，APP的新名称为{app.name}")
+
+    def delete_app(self, id: uuid.UUID):
+        app = self.app_service.delete_app(id)
+        return success_message("删除成功")
 
     def ping(self):
         return {"data": "pong"}

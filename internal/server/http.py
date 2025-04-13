@@ -1,18 +1,27 @@
 import os
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from config import Config
 from internal.exception import CustomException
+from internal.model import App
 from internal.router import Router
 from pkg.response import json, Response, HttpCode
+from pkg.sqlalchemy import SQLAlchemy
 
 
 class Http(Flask):
     """Http服务引擎"""
 
-    def __init__(self, *args, conf: Config, db: SQLAlchemy, router: Router, **kwargs):
+    def __init__(self,
+                 *args,
+                 conf: Config,
+                 db: SQLAlchemy,
+                 migrate: Migrate,
+                 router: Router,
+
+                 **kwargs):
         super().__init__(*args, **kwargs)
         # 通过类的方式将应用配置加载
         self.config.from_object(conf)
@@ -22,6 +31,11 @@ class Http(Flask):
 
         # 初始化SQLAlchemy扩展
         db.init_app(self)
+        migrate.init_app(self, db, directory="internal/migration")
+        # 创建数据库表
+        with self.app_context():
+            _ = App()  # 确保项目代码一定能检索到app模型
+            db.create_all()
 
         # 注册应用路由
         router.register_router(self)

@@ -10,3 +10,30 @@ Accept: application/json
 {
   "query": ""
 }
+
+### 创建APP
+POST http://127.0.0.1:8080/app
+Content-Type: application/json
+Accept: application/json
+
+{
+}
+
+
+### 获取APP
+GET http://127.0.0.1:8080/app/806f0fd7-8654-4704-bce7-3cc50f7ac5c5
+Content-Type: application/json
+Accept: application/json
+
+### 修改APP
+POST http://127.0.0.1:8080/app/806f0fd7-8654-4704-bce7-3cc50f7ac5c5
+Content-Type: application/json
+Accept: application/json
+
+### 删除APP
+POST http://127.0.0.1:8080/app/806f0fd7-8654-4704-bce7-3cc50f7ac5c5/delete
+Content-Type: application/json
+Accept: application/json
+
+
+
