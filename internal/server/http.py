@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 from config import Config
 from internal.exception import CustomException
@@ -11,13 +12,16 @@ from pkg.response import json, Response, HttpCode
 class Http(Flask):
     """Http服务引擎"""
 
-    def __init__(self, *args, conf: Config, router: Router, **kwargs):
+    def __init__(self, *args, conf: Config, db: SQLAlchemy, router: Router, **kwargs):
         super().__init__(*args, **kwargs)
         # 通过类的方式将应用配置加载
         self.config.from_object(conf)
 
         # 绑定异常错误处理
         self.register_error_handler(Exception, self._register_error_handler)
+
+        # 初始化SQLAlchemy扩展
+        db.init_app(self)
 
         # 注册应用路由
         router.register_router(self)
