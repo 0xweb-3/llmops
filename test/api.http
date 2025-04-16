@@ -8,7 +8,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "query": ""
+  "query": "请讲一个笑话"
 }
 
 ### 创建APP

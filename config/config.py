@@ -26,4 +26,4 @@ class Config:
             "pool_size": int(_get_env("SQLALCHEMY_POOL_SIZE")),  # 连接池的大小
             "pool_recycle": int(_get_env("SQLALCHEMY_POOL_RECYCLE")),  # 每个连接的生命周期
         }
-        self.WTF_CSRF_ENABLED = _get_bool_env("SQLALCHEMY_ECHO")  # 将sql语句执行打印
+        self.SQLALCHEMY_ECHO = _get_bool_env("SQLALCHEMY_ECHO")  # 将sql语句执行打印

@@ -4,7 +4,9 @@ from dataclasses import dataclass
 
 from flask import request
 from injector import inject
-from openai import OpenAI
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 
 from internal.schema.app_schema import CompletionRequest
 from internal.service import AppService
@@ -47,19 +49,45 @@ class AppHandler:
 
         # 1.提取从接口中获取的输入
         query = request.json.get("query")
+
+        prompt = ChatPromptTemplate.from_template("{query}")
+
         # 2.构建OpenAI客户端，并发起请求
-        client = OpenAI(
-            api_key=os.getenv("OPENAI_API_KEY"),
-            base_url=os.getenv("OPENAI_API_URL"))
+        llm = ChatOpenAI(model_name="gpt-3.5-turbo",
+                         openai_api_key=os.getenv("OPENAI_API_KEY"),
+                         openai_api_base=os.getenv("OPENAI_API_URL")
+                         )
+
         # 3.得到请求响应，然后将OpenAI的响应传递给前端
-        # completion = client.responses.create(
-        #     model="gpt-3.5-turbo",
-        #     input=query
-        # )
+        ai_message = llm.invoke(prompt.invoke({"query": query}))
 
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": query}]
-        )
+        # 4. 解析响应内容
+        parser = StrOutputParser()
+        context = parser.invoke(ai_message)
 
-        return success_json(response.choices[0].message.content)
+        return success_json(context)
+
+    # def completion(self):
+    #     """聊天接口"""
+    #     req = CompletionRequest()
+    #     if not req.validate():
+    #         return validate_error_json(req.errors)
+    #
+    #     # 1.提取从接口中获取的输入
+    #     query = request.json.get("query")
+    #     # 2.构建OpenAI客户端，并发起请求
+    #     client = OpenAI(
+    #         api_key=os.getenv("OPENAI_API_KEY"),
+    #         base_url=os.getenv("OPENAI_API_URL"))
+    #     # 3.得到请求响应，然后将OpenAI的响应传递给前端
+    #     # completion = client.responses.create(
+    #     #     model="gpt-3.5-turbo",
+    #     #     input=query
+    #     # )
+    #
+    #     response = client.chat.completions.create(
+    #         model="gpt-3.5-turbo",
+    #         messages=[{"role": "user", "content": query}]
+    #     )
+    #
+    #     return success_json(response.choices[0].message.content)
