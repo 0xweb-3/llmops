@@ -1,11 +1,12 @@
 import os
+import time
 from typing import Any, Optional, Union
 from uuid import UUID
 
 import dotenv
 from langchain_core.messages import BaseMessage
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.outputs import GenerationChunk, ChatGenerationChunk
+from langchain_core.outputs import GenerationChunk, ChatGenerationChunk, LLMResult
 from langchain_core.runnables import RunnablePassthrough
 
 dotenv.load_dotenv()
@@ -44,6 +45,17 @@ class LLMOpsCallbackHandler(BaseCallbackHandler):
     ) -> Any:
         print("token生成了")
         print("token:", token)
+
+    def on_llm_end(
+            self,
+            response: LLMResult,
+            *,
+            run_id: UUID,
+            parent_run_id: Optional[UUID] = None,
+            **kwargs: Any,
+    ) -> Any:
+        end_at: float = time.time()
+        print("程序结束时间：", end_at)
 
 
 if __name__ == '__main__':
