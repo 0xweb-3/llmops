@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     result = pipeline_prompt.invoke({
         "person": "雷军",
-        "example_q": "你最喜欢的汽车是什么?",
+        "example_q": "你最喜欢的汽车是什么呀?",
         "example_a": "小米SU7",
         "input": "你最喜欢的手机是什么"
     })
