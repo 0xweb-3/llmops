@@ -1,10 +1,11 @@
 import os
-from typing import Any, Optional
+from typing import Any, Optional, Union
 from uuid import UUID
 
 import dotenv
 from langchain_core.messages import BaseMessage
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.outputs import GenerationChunk, ChatGenerationChunk
 from langchain_core.runnables import RunnablePassthrough
 
 dotenv.load_dotenv()
@@ -32,6 +33,18 @@ class LLMOpsCallbackHandler(BaseCallbackHandler):
         print("serialized:", serialized)
         print("messages:", messages)
 
+    def on_llm_new_token(
+            self,
+            token: str,
+            *,
+            chunk: Optional[Union[GenerationChunk, ChatGenerationChunk]] = None,
+            run_id: UUID,
+            parent_run_id: Optional[UUID] = None,
+            **kwargs: Any,
+    ) -> Any:
+        print("token生成了")
+        print("token:", token)
+
 
 if __name__ == '__main__':
     # 1 构建组件
@@ -47,8 +60,12 @@ if __name__ == '__main__':
     chain = {"query": RunnablePassthrough()} | prompt | llm | StrOutputParser()
 
     # 3 调用链得到结果
-    content = chain.invoke("你好你是？",
-                           config={"callbacks": [StdOutCallbackHandler(), LLMOpsCallbackHandler()]}
-                           )
+    # content = chain.invoke( // invoke 不会生成新token
+    resp = chain.stream(
+        "你好你是？",
+        config={"callbacks": [StdOutCallbackHandler(), LLMOpsCallbackHandler()]}
+    )
 
-    print(content)
+    # print(content)
+    for chunk in resp:
+        pass
