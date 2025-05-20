@@ -76,7 +76,7 @@
 | └---... ├---storage // 本地存储文件夹
 ├---test // 测试目录
 ├---venv // 虚拟环境
-├---.env // 应用配置文件
+├---..env // 应用配置文件
 ├---.gitignore // 配置git忽略文件
 ├---requirements.txt // 第三方包依赖管理
 └---README.md // 项目说明文件
