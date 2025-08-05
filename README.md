@@ -116,3 +116,15 @@
  pytest -v
 ```
 
+## 数据迁移
+
+```shell
+flask --app app.http.app db migrate -m "create_table"
+flask --app app.http.app db upgrade
+```
+
+## 项目运行
+
+```shell
+
+```
