@@ -126,5 +126,5 @@ flask --app app.http.app db upgrade
 ## 项目运行
 
 ```shell
-
+python -m app.http.app
 ```
