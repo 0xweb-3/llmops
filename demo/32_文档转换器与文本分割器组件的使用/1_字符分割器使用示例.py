@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     # 2. 创建文本分割器
     text_splitter = CharacterTextSplitter(
-        separator="\n\n",
+        separator="\n\n", # 第一部分拆分
         chunk_size=500,
         chunk_overlap=50,
         add_start_index=True,
