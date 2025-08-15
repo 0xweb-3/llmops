@@ -177,5 +177,10 @@ cython_debug/
 myenv
 
 .idea
+cache
+embeddings
 
 tmp
+chat_history.json
+chat_historyxinbl.txt
+multy-vector
